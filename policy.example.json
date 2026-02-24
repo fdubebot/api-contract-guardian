@@ -1,0 +1,9 @@
+{
+  "failOn": [
+    "endpoint_removed",
+    "status_removed",
+    "query_param_required_added",
+    "request_body_required_added"
+  ],
+  "allowEndpointAdditions": true
+}
