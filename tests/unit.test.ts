@@ -19,6 +19,7 @@ describe('core modules', () => {
     expect(result.changes.some((c) => c.type === 'endpoint_removed')).toBe(true);
     expect(result.changes.some((c) => c.type === 'query_param_required_added')).toBe(true);
     expect(result.changes.some((c) => c.type === 'request_body_required_added')).toBe(true);
+    expect(result.changes.some((c) => c.type === 'header_param_required_added')).toBe(true);
     expect(result.changes.some((c) => c.type === 'endpoint_added')).toBe(true);
   });
 

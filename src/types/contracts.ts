@@ -7,6 +7,7 @@ export interface Endpoint {
   requestBodyRequired: boolean;
   responseStatusCodes: string[];
   requiredQueryParams: string[];
+  requiredHeaderParams: string[];
 }
 
 export interface ApiContract {
@@ -16,7 +17,13 @@ export interface ApiContract {
 }
 
 export interface Change {
-  type: 'endpoint_removed' | 'status_removed' | 'query_param_required_added' | 'request_body_required_added' | 'endpoint_added';
+  type:
+    | 'endpoint_removed'
+    | 'status_removed'
+    | 'query_param_required_added'
+    | 'header_param_required_added'
+    | 'request_body_required_added'
+    | 'endpoint_added';
   severity: 'breaking' | 'non_breaking';
   message: string;
   endpoint?: string;

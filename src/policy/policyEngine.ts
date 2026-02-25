@@ -1,7 +1,13 @@
 import { AnalysisResult, Change, PolicyConfig } from '../types/contracts.js';
 
 export const defaultPolicy: PolicyConfig = {
-  failOn: ['endpoint_removed', 'status_removed', 'query_param_required_added', 'request_body_required_added'],
+  failOn: [
+    'endpoint_removed',
+    'status_removed',
+    'query_param_required_added',
+    'header_param_required_added',
+    'request_body_required_added'
+  ],
   allowEndpointAdditions: true
 };
 

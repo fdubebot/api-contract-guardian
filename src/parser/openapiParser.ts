@@ -16,6 +16,10 @@ function parseDoc(filePath: string): Dict {
   return JSON.parse(raw) as Dict;
 }
 
+function collectRequiredParams(params: Dict[], location: 'query' | 'header'): string[] {
+  return [...new Set(params.filter((p) => p.in === location && p.required === true).map((p) => String(p.name)))].sort();
+}
+
 export function parseOpenApi(filePath: string): ApiContract {
   const doc = parseDoc(filePath);
   const endpoints: Endpoint[] = [];
@@ -24,16 +28,16 @@ export function parseOpenApi(filePath: string): ApiContract {
 
   for (const [route, operations] of Object.entries(paths)) {
     const operationRecord = (operations as Dict | undefined) ?? {};
+    const pathLevelParams = ((operationRecord.parameters as unknown[]) ?? []) as Dict[];
 
     for (const method of METHODS) {
       const operation = operationRecord[method] as Dict | undefined;
       if (!operation) continue;
 
-      const params = ((operation.parameters as unknown[]) ?? []) as Dict[];
-      const requiredQueryParams = params
-        .filter((p) => p.in === 'query' && p.required === true)
-        .map((p) => String(p.name))
-        .sort();
+      const operationParams = ((operation.parameters as unknown[]) ?? []) as Dict[];
+      const params = [...pathLevelParams, ...operationParams];
+      const requiredQueryParams = collectRequiredParams(params, 'query');
+      const requiredHeaderParams = collectRequiredParams(params, 'header');
 
       const requestBody = (operation.requestBody as Dict | undefined) ?? {};
       const responses = (operation.responses as Dict | undefined) ?? {};
@@ -44,7 +48,8 @@ export function parseOpenApi(filePath: string): ApiContract {
         operationId: typeof operation.operationId === 'string' ? operation.operationId : undefined,
         requestBodyRequired: requestBody.required === true,
         responseStatusCodes: Object.keys(responses).sort(),
-        requiredQueryParams
+        requiredQueryParams,
+        requiredHeaderParams
       });
     }
   }

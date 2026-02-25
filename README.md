@@ -5,11 +5,13 @@ Detect breaking API changes between two OpenAPI specs and fail CI when policy vi
 ## Features
 
 - Parse OpenAPI **JSON and YAML**
+- Supports operation + path-level parameter inheritance
 - Compare old vs new contracts across endpoints
 - Detect:
   - removed endpoints
   - removed response status codes
   - newly required query parameters
+  - newly required header parameters
   - newly required request body
   - added endpoints
 - Configurable policy gate
@@ -50,7 +52,7 @@ Use JSON format:
 
 ```json
 {
-  "failOn": ["endpoint_removed", "status_removed"],
+  "failOn": ["endpoint_removed", "status_removed", "header_param_required_added"],
   "allowEndpointAdditions": true
 }
 ```

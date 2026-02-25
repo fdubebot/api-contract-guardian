@@ -14,6 +14,11 @@ paths:
       responses:
         '200': { description: OK }
   /orders:
+    parameters:
+      - in: header
+        name: X-Tenant-Id
+        required: true
+        schema: { type: string }
     post:
       operationId: createOrder
       requestBody:

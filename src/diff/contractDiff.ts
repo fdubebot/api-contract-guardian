@@ -45,6 +45,17 @@ export function diffContracts(oldContract: ApiContract, newContract: ApiContract
       });
     }
 
+    const newlyRequiredHeaders = newer.requiredHeaderParams.filter((h) => !oldEp.requiredHeaderParams.includes(h));
+    for (const h of newlyRequiredHeaders) {
+      changes.push({
+        type: 'header_param_required_added',
+        severity: 'breaking',
+        message: `${k} now requires header '${h}'`,
+        endpoint: oldEp.path,
+        method: oldEp.method
+      });
+    }
+
     if (!oldEp.requestBodyRequired && newer.requestBodyRequired) {
       changes.push({
         type: 'request_body_required_added',

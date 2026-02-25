@@ -23,10 +23,18 @@ Build a substantial new tool in a new repo that performs contract governance for
 ## Implementation Steps
 - [x] Scaffold TypeScript project with lint/test/build.
 - [x] Implement parser, diff, policy, reporting, and CLI modules.
-- [ ] Add fixture OpenAPI files and tests (unit + integration).
-- [ ] Document usage and examples.
+- [x] Add fixture OpenAPI files and tests (unit + integration).
+- [x] Document usage and examples.
 - [ ] Run lint/test/build.
 - [ ] Commit and push to GitHub.
+
+## Daily Run Plan (2026-02-25)
+- [x] Add support for detecting newly required headers as breaking changes.
+- [x] Parse inherited path-level parameters in addition to operation-level parameters.
+- [x] Extend fixtures/tests to cover inherited header requirement detection.
+- [x] Update docs and policy example for new change type.
+- [ ] Run lint/test/build and verify all green.
+- [ ] Commit and push.
 
 ## Risks / Mitigations
 - **OpenAPI complexity**: start with high-value subset and document supported scope.
